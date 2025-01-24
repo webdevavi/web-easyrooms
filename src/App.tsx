@@ -217,7 +217,7 @@ const App: React.FC = () => {
         <DrawerContent>
           <div className="mx-auto w-full max-w-sm">
             <DrawerHeader>
-              <DrawerTitle>Add Room</DrawerTitle>
+              <DrawerTitle className="dark:text-white">Add Room</DrawerTitle>
               <DrawerDescription>
                 Choose up to 5 rooms to book.
               </DrawerDescription>
