@@ -2,7 +2,7 @@ export enum UserCtxActionTypes {
   SET_USER = "SET_USER",
 }
 
-export type UserCtxState = {
+export interface UserCtxState {
   user: string
 }
 

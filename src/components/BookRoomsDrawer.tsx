@@ -1,6 +1,6 @@
-import { useFloorsCtx } from "@/hooks/useFloorsCtx"
+import React, { useCallback, useState } from "react"
 import { Minus, Plus } from "lucide-react"
-import React, { memo, useState } from "react"
+import { useFloorsCtx } from "@/hooks/useFloorsCtx"
 import { Button } from "./ui/button"
 import {
   Drawer,
@@ -15,11 +15,23 @@ import {
 
 const BookRoomsDrawer: React.FC = () => {
   const [{ availableRoomsCount }, { bookRooms }] = useFloorsCtx()
-
   const [count, setCount] = useState(1)
 
+  const handleDecrease = useCallback(
+    () => setCount((prev) => Math.max(1, prev - 1)),
+    []
+  )
+
+  const handleIncrease = useCallback(
+    () =>
+      setCount((prev) => Math.min(Math.min(5, availableRoomsCount), prev + 1)),
+    [availableRoomsCount]
+  )
+
+  const handleReset = useCallback(() => setCount(1), [])
+
   return (
-    <Drawer onClose={() => setCount(1)}>
+    <Drawer onClose={handleReset}>
       <DrawerTrigger asChild>
         <Button
           size="lg"
@@ -41,7 +53,7 @@ const BookRoomsDrawer: React.FC = () => {
                 variant="outline"
                 size="icon"
                 className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => setCount((prev) => Math.max(1, prev - 1))}
+                onClick={handleDecrease}
                 disabled={count <= 1}
               >
                 <Minus />
@@ -59,12 +71,8 @@ const BookRoomsDrawer: React.FC = () => {
                 variant="outline"
                 size="icon"
                 className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() =>
-                  setCount((prev) =>
-                    Math.min(Math.min(5, availableRoomsCount), prev + 1)
-                  )
-                }
-                disabled={count >= 5}
+                onClick={handleIncrease}
+                disabled={count >= 5 || count >= availableRoomsCount}
               >
                 <Plus />
                 <span className="sr-only">Increase</span>
@@ -85,4 +93,4 @@ const BookRoomsDrawer: React.FC = () => {
   )
 }
 
-export default memo(BookRoomsDrawer)
+export default BookRoomsDrawer

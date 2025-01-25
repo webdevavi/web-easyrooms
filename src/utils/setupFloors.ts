@@ -1,29 +1,16 @@
-import { Floor, Room } from "@/context/Floors/types"
+import { Floor } from "@/context/Floors/types"
+import { getRoomIdForRoom } from "./getRoomIdForRoom"
 
-export const setupFloors = (): [Floor[], number] => [
-  Array(10)
-    .fill("")
-    .map((_, floorIdx) =>
-      floorIdx === 9
-        ? Array(7)
-            .fill("")
-            .map(
-              (_, roomIdx) =>
-                ({
-                  id: `${floorIdx + 1}-${roomIdx + 1}`,
-                  isBooked: false,
-                } as Room)
-            )
-        : Array(10)
-            .fill("")
-            .map(
-              (_, roomIdx) =>
-                ({
-                  id: `${floorIdx + 1}-${roomIdx + 1}`,
-                  isBooked: false,
-                } as Room)
-            )
-    )
-    .reverse(),
-  97,
-]
+export const setupFloors = (): [Floor[], number] => {
+  const floors = Array.from({ length: 10 })
+    .map((_, floorIdx) => {
+      const roomCount = floorIdx === 9 ? 7 : 10
+      return Array.from({ length: roomCount }).map((_, roomIdx) => ({
+        id: getRoomIdForRoom(floorIdx, roomIdx),
+        isBooked: false,
+      }))
+    })
+    .reverse()
+
+  return [floors, 97]
+}

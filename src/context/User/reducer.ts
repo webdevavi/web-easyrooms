@@ -10,6 +10,7 @@ export const userCtxReducer = (
     case UserCtxActionTypes.SET_USER:
       localStorage.setItem(LOCAL_STORAGE_USER_KEY, action.payload)
       return { ...state, user: action.payload }
+
     default:
       return state
   }

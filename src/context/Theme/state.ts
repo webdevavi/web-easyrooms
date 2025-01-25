@@ -1,12 +1,13 @@
 import { LOCAL_STORAGE_THEME_KEY } from "@/constants/Theme"
 import { ThemeCtxState, Themes } from "./types"
 
-let theme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Themes
-
-if (!theme || !Object.values(Themes).includes(theme as Themes)) {
-  theme = Themes.System
+const getInitialTheme = (): Themes => {
+  const storedTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Themes
+  return storedTheme && Object.values(Themes).includes(storedTheme)
+    ? storedTheme
+    : Themes.System
 }
 
 export const initialThemeCtxState: ThemeCtxState = {
-  theme,
+  theme: getInitialTheme(),
 }

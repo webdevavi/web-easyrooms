@@ -1,6 +1,6 @@
+import React from "react"
 import { useUserCtx } from "@/hooks/useUserCtx"
 import { getUserAvatar } from "@/utils/getUserAvatar"
-import React, { memo } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 
@@ -32,17 +32,17 @@ const UserSwitcher: React.FC = () => {
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="grid grid-cols-4 gap-4">
-          {users.map((user) => (
+          {users.map((username) => (
             <button
-              key={user}
+              key={username}
               className="flex flex-col items-center hover:scale-125 active:scale-90 transition-transform"
-              onClick={() => setUser(user)}
+              onClick={() => setUser(username)}
             >
               <Avatar className="h-8 w-8 md:h-12 md:w-12 bg-slate-200 dark:bg-slate-700">
-                <AvatarImage src={getUserAvatar(user)} alt={user} />
-                <AvatarFallback>{user}</AvatarFallback>
+                <AvatarImage src={getUserAvatar(username)} alt={username} />
+                <AvatarFallback>{username}</AvatarFallback>
               </Avatar>
-              <span className="block text-center text-xs mt-1">{user}</span>
+              <span className="block text-center text-xs mt-1">{username}</span>
             </button>
           ))}
         </div>
@@ -51,4 +51,4 @@ const UserSwitcher: React.FC = () => {
   )
 }
 
-export default memo(UserSwitcher)
+export default UserSwitcher

@@ -8,3 +8,17 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.arrow {
+  pointer-events: none;
+}
+
+.arrow__path {
+  stroke: #fff;
+  fill: transparent;
+  stroke-dasharray: 4 2;
+}
+
+.arrow__head {
+  fill: #fff;
+}

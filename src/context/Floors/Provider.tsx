@@ -1,11 +1,9 @@
-import React, { memo, PropsWithChildren, useReducer } from "react"
+import React, { memo, useReducer } from "react"
 import { floorsCtxReducer } from "./reducer"
 import { initialFloorsCtxState } from "./state"
 import { FloorsCtx } from "./Context"
 
-const FloorsCtxProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  console.log("FloorsCtxProvider")
-
+const FloorsCtxProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(floorsCtxReducer, initialFloorsCtxState)
 
   return (

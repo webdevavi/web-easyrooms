@@ -1,22 +1,25 @@
 import { FloorsCtxAction, FloorsCtxActionTypes } from "./types"
 
-export const bookRooms = (payload: {
+export const bookRooms = ({
+  count,
+  user,
+}: {
   count: number
   user: string
-}): FloorsCtxAction => {
-  console.log("running action bookRooms")
-  return {
-    type: FloorsCtxActionTypes.BOOK_ROOMS,
-    payload,
-  }
-}
+}): FloorsCtxAction => ({
+  type: FloorsCtxActionTypes.BOOK_ROOMS,
+  payload: { count, user },
+})
 
-export const randomizeOccupancy = (payload: {
+export const randomizeOccupancy = ({
+  percent,
+  user,
+}: {
   percent: number
   user: string
 }): FloorsCtxAction => ({
   type: FloorsCtxActionTypes.RANDOMIZE_OCCUPANCY,
-  payload,
+  payload: { percent, user },
 })
 
 export const reset = (): FloorsCtxAction => ({

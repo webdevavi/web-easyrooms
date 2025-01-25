@@ -1,5 +1,5 @@
+import React from "react"
 import { Moon, PcCase, Sun } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -9,9 +9,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Themes } from "@/context/Theme/types"
 import { useThemeCtx } from "@/hooks/useThemeCtx"
-import { memo } from "react"
 
-const ThemeSwitcher = () => {
+const ThemeIcons = {
+  [Themes.Light]: Sun,
+  [Themes.Dark]: Moon,
+  [Themes.System]: PcCase,
+}
+
+const ThemeSwitcher: React.FC = () => {
   const [, { setTheme }] = useThemeCtx()
 
   return (
@@ -24,21 +29,22 @@ const ThemeSwitcher = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {Object.values(Themes).map((theme) => (
-          <DropdownMenuItem
-            key={theme}
-            onClick={() => setTheme(theme)}
-            className="flex items-center justify-between capitalize"
-          >
-            {theme}
-            {theme === Themes.Light && <Sun className="h-4 w-4" />}
-            {theme === Themes.Dark && <Moon className="h-4 w-4" />}
-            {theme === Themes.System && <PcCase className="h-4 w-4" />}
-          </DropdownMenuItem>
-        ))}
+        {Object.values(Themes).map((theme) => {
+          const Icon = ThemeIcons[theme]
+          return (
+            <DropdownMenuItem
+              key={theme}
+              onClick={() => setTheme(theme)}
+              className="flex items-center justify-between capitalize"
+            >
+              {theme}
+              <Icon className="h-4 w-4" />
+            </DropdownMenuItem>
+          )
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
 
-export default memo(ThemeSwitcher)
+export default ThemeSwitcher

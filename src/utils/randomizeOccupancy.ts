@@ -5,37 +5,24 @@ export const randomizeOccupancy = (
   percent: number,
   user: string
 ): [Floor[], string[]] => {
-  const flattened = floors.flat()
-
-  const availableRooms = flattened.filter((room) => room.isBooked === false)
+  const availableRooms = floors.flat().filter((room) => !room.isBooked)
   const numberOfRoomsToBook = Math.floor(
     (availableRooms.length * percent) / 100
   )
 
-  const indices = availableRooms.map((_, idx) => idx)
-  const randomIndices = indices
+  const bookedRooms = availableRooms
     .sort(() => 0.5 - Math.random())
     .slice(0, numberOfRoomsToBook)
+    .map((room) => ({ ...room, isBooked: true, bookedByUser: user }))
 
-  const bookedRoomIds: string[] = []
+  const bookedRoomIds = bookedRooms.map((room) => room.id)
 
-  const updatedFlattened = flattened.map((room, idx) => {
-    if (randomIndices.includes(idx)) {
-      bookedRoomIds.push(room.id)
-      return { ...room, isBooked: true, bookedByUser: user }
-    }
-    return room
-  })
-
-  const updatedFloors: Floor[] = []
-  let startIndex = 0
-
-  for (const floor of floors) {
-    updatedFloors.push(
-      updatedFlattened.slice(startIndex, startIndex + floor.length)
+  const updatedFloors = floors.map((floor) =>
+    floor.map(
+      (room) =>
+        bookedRooms.find((bookedRoom) => bookedRoom.id === room.id) || room
     )
-    startIndex += floor.length
-  }
+  )
 
   return [updatedFloors, bookedRoomIds]
 }

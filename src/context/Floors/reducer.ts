@@ -8,11 +8,9 @@ export const floorsCtxReducer = (
   state = initialFloorsCtxState,
   action: FloorsCtxAction
 ): FloorsCtxState => {
-  console.log(action.type)
-
   switch (action.type) {
     case FloorsCtxActionTypes.BOOK_ROOMS: {
-      const [updatedFloors, bookedFloorIds] = bookRooms(
+      const [updatedFloors, bookedFloorIds, combinations] = bookRooms(
         state.floors,
         action.payload.count,
         action.payload.user
@@ -21,14 +19,14 @@ export const floorsCtxReducer = (
       return {
         ...state,
         floors: updatedFloors,
-        availableRoomsCount: state.totalRoomsCount - bookedFloorIds.length,
+        availableRoomsCount: state.availableRoomsCount - bookedFloorIds.length,
         latestBookedRoomIds: bookedFloorIds,
+        combinations,
       }
     }
 
     case FloorsCtxActionTypes.RANDOMIZE_OCCUPANCY: {
       const [emptyFloors, totalRoomsCount] = setupFloors()
-
       const [updatedFloors, bookedFloorIds] = randomizeOccupancy(
         emptyFloors,
         action.payload.percent,
@@ -45,7 +43,6 @@ export const floorsCtxReducer = (
 
     case FloorsCtxActionTypes.RESET: {
       const [floors, totalRoomsCount] = setupFloors()
-
       return {
         floors,
         totalRoomsCount,
@@ -53,8 +50,7 @@ export const floorsCtxReducer = (
       }
     }
 
-    default: {
+    default:
       return state
-    }
   }
 }

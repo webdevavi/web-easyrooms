@@ -12,35 +12,36 @@ export const useThemeCtx = (
   useEffect(() => {
     if (!initialize) return
 
-    const root = window.document.documentElement
+    const root = document.documentElement
+    const savedTheme = state.theme
 
-    // Validate theme value
-    if (!Object.values(Themes).includes(state.theme)) {
-      console.error("Invalid theme value:", state.theme)
+    // Validate and apply theme
+    if (!Object.values(Themes).includes(savedTheme)) {
+      console.error("Invalid theme value:", savedTheme)
       return
     }
 
+    // Safely update localStorage
     try {
-      if (window.localStorage) {
-        localStorage.setItem(LOCAL_STORAGE_THEME_KEY, state.theme)
-      }
+      localStorage?.setItem(LOCAL_STORAGE_THEME_KEY, savedTheme)
     } catch (error) {
-      console.error("Error saving to localStorage:", error)
+      console.error("localStorage theme save failed:", error)
     }
 
+    // Remove existing theme classes
     root.classList.remove(...Object.values(Themes))
 
-    if (state.theme === Themes.System) {
+    // Apply theme
+    if (savedTheme === Themes.System) {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
-        ? "dark"
-        : "light"
-
+        ? Themes.Dark
+        : Themes.Light
       root.classList.add(systemTheme)
     } else {
-      root.classList.add(state.theme)
+      root.classList.add(savedTheme)
     }
-  }, [initialize, state])
+  }, [initialize, state.theme])
 
   const setTheme = useCallback(
     (theme: Themes) => dispatch(actions.setTheme(theme)),

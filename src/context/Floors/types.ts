@@ -4,14 +4,35 @@ export enum FloorsCtxActionTypes {
   RESET = "RESET",
 }
 
-export type Room = { id: string; isBooked: boolean; bookedByUser?: string }
-export type Floor = Room[]
+export interface Room {
+  readonly id: string
+  isBooked: boolean
+  bookedByUser?: string
+}
 
-export type FloorsCtxState = {
-  floors: Floor[]
-  totalRoomsCount: number
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface Floor extends Array<Room> {}
+
+export interface Candidate {
+  readonly floorIndex: number
+  readonly roomIndex: number
+  travelTimeFromLastCandidate: number
+}
+
+export interface Combination {
+  id: number
+  travelTime: number
+  lastCandidate?: Candidate
+  candidates: Candidate[]
+  isBest?: boolean
+}
+
+export interface FloorsCtxState {
+  readonly floors: Floor[]
+  readonly totalRoomsCount: number
   availableRoomsCount: number
   latestBookedRoomIds?: string[]
+  combinations?: Combination[]
 }
 
 export type FloorsCtxAction =

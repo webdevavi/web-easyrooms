@@ -1,14 +1,25 @@
+import React, { useState, useCallback } from "react"
 import { useFloorsCtx } from "@/hooks/useFloorsCtx"
-import { memo, useState } from "react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 
-const RandomizeOccupancyButton = () => {
+const RandomizeOccupancyButton: React.FC = () => {
   const [, { randomizeOccupancy }] = useFloorsCtx()
-
   const [percent, setPercent] = useState(25)
+
+  const handlePercentChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = parseInt(e.target.value)
+      setPercent(Math.max(0, Math.min(100, value)))
+    },
+    []
+  )
+
+  const handleRandomize = useCallback(() => {
+    randomizeOccupancy(percent)
+  }, [percent, randomizeOccupancy])
 
   return (
     <Popover>
@@ -25,18 +36,18 @@ const RandomizeOccupancyButton = () => {
           </div>
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="width">Percent</Label>
+              <Label htmlFor="percent">Percent</Label>
               <Input
                 id="percent"
                 type="number"
                 min={0}
                 max={100}
                 value={percent}
-                onChange={(e) => setPercent(parseInt(e.target.value))}
+                onChange={handlePercentChange}
                 className="col-span-2 h-8"
               />
             </div>
-            <Button onClick={() => randomizeOccupancy(percent)}>Set</Button>
+            <Button onClick={handleRandomize}>Set</Button>
           </div>
         </div>
       </PopoverContent>
@@ -44,4 +55,4 @@ const RandomizeOccupancyButton = () => {
   )
 }
 
-export default memo(RandomizeOccupancyButton)
+export default RandomizeOccupancyButton

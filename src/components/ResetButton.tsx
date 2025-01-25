@@ -1,8 +1,8 @@
+import React from "react"
 import { useFloorsCtx } from "@/hooks/useFloorsCtx"
 import { Button } from "./ui/button"
-import { memo } from "react"
 
-const ResetButton = () => {
+const ResetButton: React.FC = () => {
   const [, { reset }] = useFloorsCtx()
 
   return (
@@ -12,4 +12,4 @@ const ResetButton = () => {
   )
 }
 
-export default memo(ResetButton)
+export default ResetButton

@@ -8,7 +8,7 @@ export enum ThemeCtxActionTypes {
   SET_THEME = "SET_THEME",
 }
 
-export type ThemeCtxState = {
+export interface ThemeCtxState {
   theme: Themes
 }
 
