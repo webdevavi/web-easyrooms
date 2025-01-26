@@ -1,9 +1,9 @@
-import React from "react"
-import { cn } from "@/lib/utils"
-import { cva } from "class-variance-authority"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { useFloorsCtx } from "@/hooks/useFloorsCtx"
+import { cn } from "@/lib/utils"
 import { getUserAvatar } from "@/utils/getUserAvatar"
+import { cva } from "class-variance-authority"
+import React from "react"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 const cellVariants = cva(
   "w-8 h-8 md:w-12 md:h-12 rounded-lg flex flex-col items-center justify-center",
@@ -27,7 +27,7 @@ const RoomsGrid: React.FC = () => {
 
   return (
     <div className="relative flex flex-row w-full px-24 overflow-x-auto">
-      <div className="mx-auto min-w-max flex flex-col gap-2 md:gap-4 p-2">
+      <div className="mx-auto min-w-max flex flex-col p-2 gap-2 md:gap-4">
         {floors.map((rooms, i) => (
           <div key={`floor-${i}`} className="flex flex-row gap-2 md:gap-4">
             {rooms.map(({ id, isBooked, bookedByUser }, j) => {

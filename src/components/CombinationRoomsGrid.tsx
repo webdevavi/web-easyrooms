@@ -47,6 +47,8 @@ const CombinationRoomsGrid: React.FC<CombinationRoomsGridProps> = ({
 
       if (current && next) {
         const arrow = arrowCreate({
+          className:
+            "stroke-black/40 stroke-2 dark:stroke-white/40 fill-transparent [&>g]:fill-black/40 [&>g]:dark:fill-white/40",
           from: {
             direction: DIRECTION.TOP_LEFT,
             node: current,
@@ -86,23 +88,20 @@ const CombinationRoomsGrid: React.FC<CombinationRoomsGridProps> = ({
   )
 
   return (
-    <div>
-      <div className="p-4">
-        <Alert>
-          {alertIcon}
-          <AlertTitle className={alertTitle}>
-            {combination.isBest ? "The best!" : "Not the best!"}
-          </AlertTitle>
-          <AlertDescription className="max-w-xl text-white/60">
-            This combination takes {combination.isBest ? "only" : ""}{" "}
-            {combination.travelTime} minutes to travel between the rooms and is
-            the most optimal combination.
-          </AlertDescription>
-        </Alert>
-      </div>
+    <div className="w-full flex flex-col gap-4">
+      <Alert>
+        {alertIcon}
+        <AlertTitle className={alertTitle}>
+          {combination.isBest ? "The best!" : "Not the best!"}
+        </AlertTitle>
+        <AlertDescription className="max-w-xl text-black/50 dark:text-white/60">
+          This combination takes {combination.isBest ? "only" : ""}{" "}
+          {combination.travelTime} minutes to travel between the rooms.
+        </AlertDescription>
+      </Alert>
 
-      <div className="relative flex flex-row w-full px-24 overflow-x-auto">
-        <div className="mx-auto min-w-max flex flex-col gap-2 md:gap-4 p-2">
+      <div className="w-full relative flex flex-row w-full overflow-x-auto">
+        <div className="mx-auto min-w-max flex flex-col gap-2 md:gap-4">
           {floors.map((rooms, i) => (
             <div key={`floor-${i}`} className="flex flex-row gap-2 md:gap-4">
               {rooms.map(({ id }, j) => {
@@ -125,7 +124,7 @@ const CombinationRoomsGrid: React.FC<CombinationRoomsGridProps> = ({
                     )}
                   >
                     {candidate ? (
-                      <p className="text-xs font-semibold text-green-300">
+                      <p className="text-xs font-semibold text-green-600 dark:text-green-300">
                         {candidate.travelTimeFromLastCandidate
                           ? `+${candidate.travelTimeFromLastCandidate}m`
                           : "0"}

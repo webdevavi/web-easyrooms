@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react"
 import { useFloorsCtx } from "@/hooks/useFloorsCtx"
+import React, { useState } from "react"
+import Carousel from "./Carousel"
 import CombinationRoomsGrid from "./CombinationRoomsGrid"
 import {
   Card,
@@ -8,38 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card"
-import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "./ui/carousel"
 
 const Combinations: React.FC = () => {
   const [{ combinations }] = useFloorsCtx()
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
 
-  useEffect(() => {
-    if (!api) return
-
-    setCurrent(api.selectedScrollSnap())
-    api.on("select", () => setCurrent(api.selectedScrollSnap()))
-  }, [api])
-
-  const carouselContent = useMemo(
-    () =>
-      combinations?.map((combination, index) => (
-        <CarouselItem key={index}>
-          {index === current && (
-            <CombinationRoomsGrid combination={combination} />
-          )}
-        </CarouselItem>
-      )),
-    [combinations, current]
-  )
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   if (!combinations?.length) {
     return (
@@ -54,11 +28,15 @@ const Combinations: React.FC = () => {
 
   return (
     <Card className="w-full">
-      <CardContent className="w-full p-0">
-        <Carousel setApi={setApi} className="w-full p-0">
-          <CarouselContent>{carouselContent}</CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+      <CardContent className="w-full p-4">
+        <Carousel onSlide={setCurrentIndex}>
+          {combinations?.map((combination, index) => (
+            <div key={index}>
+              {currentIndex === index && (
+                <CombinationRoomsGrid key={index} combination={combination} />
+              )}
+            </div>
+          ))}
         </Carousel>
       </CardContent>
     </Card>
