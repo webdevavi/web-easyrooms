@@ -22,9 +22,8 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <div className="flex flex-col w-full h-screen dark:bg-black overflow-x-hidden gap-4">
+    <div className="flex flex-col w-full h-screen dark:bg-black">
       <Header />
-
       <div className="relative flex flex-col w-full max-w-4xl mx-auto px-4 gap-4">
         <Tabs defaultValue="bookings" value={selectedTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">

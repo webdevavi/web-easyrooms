@@ -6,7 +6,7 @@ import ThemeSwitcher from "./ThemeSwitcher"
 import UserSwitcher from "./UserSwitcher"
 
 const Header: React.FC = () => (
-  <header className="w-full flex flex-row items-center justify-between px-4">
+  <header className="w-full flex flex-row items-center justify-between py-2 px-4">
     <Logo />
     <div className="flex flex-row justify-center gap-2">
       <ThemeSwitcher />

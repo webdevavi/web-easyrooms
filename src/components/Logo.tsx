@@ -17,7 +17,7 @@ const Logo: React.FC = () => {
     [theme, isSystemThemeDark]
   )
 
-  return <img src={logoSrc} width={80} className="object-cover" alt="Logo" />
+  return <img src={logoSrc} className="object-cover w-20 h-12 " alt="Logo" />
 }
 
 export default memo(Logo)
